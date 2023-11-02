@@ -31,13 +31,70 @@ func NewGrid(s string) (*Grid, error) {
 	return g, nil
 }
 
+func (g Grid) IsValid() bool {
+	for i := 0; i < 9; i++ {
+		ok := isSetValid(g.rows[i])
+		if !ok {
+			fmt.Printf("Row %d\n",i+1)
+			return false
+		}
+
+		ok = isSetValid(g.cols[i])
+		if !ok {
+			fmt.Printf("Col %d\n",i+1)
+			return false
+		}
+
+		ok = isSetValid(g.boxes[i])
+		if !ok {
+			fmt.Printf("Box %d\n",i+1)
+			return false
+		}
+	}
+
+	for i := 0; i < 81;i++ {
+		if g.grid[i].HasNoCandidate() {
+			r,c := IndexToCoord(i)
+			fmt.Printf("r%dc%d has no candidates\n",r+1,c+1)
+			return false 
+		}
+	}
+
+	return true
+}
+
+func (g Grid) IsFilled() bool {
+	for _,v := range g.grid {
+		if !v.IsSet() {
+			return false
+		}
+	}
+	return true
+}
+
+func isSetValid(set []*Cell) bool {
+	present := make([]bool,9)
+	for i:= 0; i < 9; i++ {
+		n := set[i].val
+		if n != 0 {
+			if present[n-1] {
+				return false
+			}
+
+			present[n-1] = true
+		}
+	}
+
+	return true
+}
+
 func (g *Grid) InsertNumberByIndex(n int, index int) {
 	row, col := IndexToCoord(index)
 	g.InsertNumberByCoord(n,row,col)
 }
 
 func (g *Grid) InsertNumberByCoord(n int, row int , col int) {
-	g.rows[row][col].val = n
+	g.rows[row][col].SetValue(n)
 	
 	box := CoordToBox(row,col)
 	for i := 0; i < 9; i++ {
@@ -94,6 +151,4 @@ func (g Grid) Print() {
 			fmt.Print("|-----------------------------|\n")
 		}
 	}
-
-	fmt.Printf("%b\n",g.grid[0].candidates)
 }

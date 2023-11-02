@@ -2,11 +2,21 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 )
 
+var e []string = []string{
+	"32168....64721.58.....3.1.65...7....49...176....9...5..74..8.311..34..7883.19....",
+}
+var m []string = []string{
+	"1..4..5....8.62...764.389....56...4..83...7.1...913..5....4....3......582....1.7.",
+}
+var h []string = []string{
+	"..2.945.....1..82.3....7.4.1..7....2....51..46...4..85..7..2.9............4.....3",
+	".1....7..7...84..6......83..49...2..8......1.53.6.29.49...1..78.8....4..3...2...1",
+}
+
 func main() {
-	grid, err := NewGrid(randomGridString())
+	grid, err := NewGrid(h[1])
 
 	if err != nil {
 		fmt.Printf("%v\n",err)
@@ -14,20 +24,5 @@ func main() {
 	}
 
 	grid.Print()
-}
-
-func randomGridString() string {
-	s := make([]byte, 81)
-	for i:= 0 ; i < 81; i++ {
-		p := rand.Intn(100)
-
-		if p < 80 {
-			s[i] = '.'
-		} else {
-			n := rand.Intn(9) + 1
-			s[i] = byte(int('0') + n)
-		}
-	}
-
-	return string(s)
+	Solve(grid)
 }
