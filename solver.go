@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/bits"
 )
 
 func Solve(g *Grid) {
@@ -23,6 +24,7 @@ func Solve(g *Grid) {
 		}
 
 		performedAction = performedAction || alignmentInBox(g, pos)
+		performedAction = performedAction || hiddenPair(g, pos)
 
 		i++
 	}
@@ -108,19 +110,26 @@ func alignmentInBox(g *Grid, pos DigitsPositionsMasks) bool {
 					for l := 0; l < 9; l++ {
 						if l < (i%3)*3 || l >= (i%3)*3+3 {
 							res := g.rows[row][l].RemoveCandidateWithFeedback(val)
+							if res {
+								fmt.Printf("cleared marks %d on r%dc%d\n",val,row+1,l+1)
+							}
 							removed = removed || res
 						}
 					}
+
 					if removed  {
 						fmt.Printf("Alignment of %d in box %d, row %d\n", val, i+1, row+1)
 						performedAction = true
 					}
 				} else { // is on a column alignment
-					col := (i/3)*3 + k - 3
+					col := (i%3)*3 + k - 3
 					removed := false
 					for l := 0; l < 9; l++ {
-						if l < (i%3)*3 || l >= (i%3)*3+3 {
+						if l < (i/3)*3 || l >= (i/3)*3+3 {
 							res := g.cols[col][l].RemoveCandidateWithFeedback(val)
+							if res {
+								fmt.Printf("cleared marks %d on r%dc%d\n",val,l+1,col+1)
+							}
 							removed = removed || res
 						}
 					}
@@ -137,5 +146,45 @@ func alignmentInBox(g *Grid, pos DigitsPositionsMasks) bool {
 		}
 	}
 
+	return performedAction
+}
+
+func hiddenPair(g *Grid, pos DigitsPositionsMasks) bool {
+	performedAction := false
+	for i := 0; i < 9; i++ {
+		// look for two digits v and d having the same mask on the row
+		// and have only two occurences. if we found one, it is a pair
+		for v := 1; v <= 9; v++ {
+			for d := v+1; d <= 9; d++ {
+				if pos.rows[v-1][i] != pos.rows[d-1][i] {
+					continue
+				}
+
+				if bits.OnesCount16(pos.rows[v-1][i]) != 2 {
+					continue
+				}
+				if bits.OnesCount16(pos.rows[d-1][i]) != 2 {
+					continue
+				}
+
+				// we have a pair (no pun intended)
+				indexes := BitsIndexes(pos.rows[v-1][i])
+
+				removed := false
+				for _, ind := range indexes {
+					res := g.rows[i][ind].RemoveCandidateExcept(v,d)
+					removed = removed || res
+				}
+
+				if removed {
+					performedAction = true
+					fmt.Printf("found a %d/%d pair on row %d at col %d/%d\n",v,d,i+1,indexes[0]+1,indexes[1]+1)
+				}
+
+				
+
+			}
+		}
+	}
 	return performedAction
 }

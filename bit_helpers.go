@@ -16,3 +16,18 @@ func IsolatedBitIndex(n uint16) (int, bool) {
 
 	return res, true
 }
+
+func BitsIndexes(n uint16) []int {
+	arr := []int{}
+	i := 0
+
+	for n > 0 {
+		if n & 1 == 1{
+			arr = append(arr, i)
+		}
+		i++
+		n >>=1
+	}
+
+	return arr
+}
