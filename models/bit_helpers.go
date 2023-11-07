@@ -1,4 +1,4 @@
-package main
+package models
 
 // IsolatedBitIndex checks if a uint16 is composed of only a single 1
 // (i.e n is a power of 2) and returns either (-1, false) if it isn't
@@ -17,6 +17,8 @@ func IsolatedBitIndex(n uint16) (int, bool) {
 	return res, true
 }
 
+// Bits indexes return the 0 base index of every '1' in 
+// the base 2 representation of n 
 func BitsIndexes(n uint16) []int {
 	arr := []int{}
 	i := 0

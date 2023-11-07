@@ -1,4 +1,4 @@
-package main
+package models
 
 type Cell struct {
 	val        int
@@ -11,10 +11,21 @@ func NewCell() Cell {
 }
 
 // SetValue sets a cell value and remove all candidates
-func (c *Cell) SetValue(v int) {
+func (c *Cell) setValue(v int) {
 	c.val = v
 	c.candidates = 0
 }
+
+// GetCandidates returns the Cell's candidates
+func (c Cell) GetCandidates() uint16 {
+	return c.candidates
+}
+
+// SetCandiates forces the candidates values,
+// this only serves testing purposes, do not use
+func (c *Cell) SetCandidates(cand uint16) {
+	c.candidates = cand
+} 
 
 // RemoveCandidate removes the candiates {n} from the possible candidates
 func (c *Cell) RemoveCandidate(n int) {
