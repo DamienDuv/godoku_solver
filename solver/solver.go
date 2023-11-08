@@ -26,7 +26,8 @@ func Solve(g *models.Grid) {
 			return
 		}
 
-		performedAction = performedAction || alignmentInBox(g)
+		performedAction = performedAction || pointingPairs(g)
+		performedAction = performedAction || boxLineReduction(g)
 
 		for j := 2; j <= 4; j++ {
 			performedAction = performedAction || nakedSubSet(g, j)
@@ -34,11 +35,7 @@ func Solve(g *models.Grid) {
 		}
 
 		i++
-	}
-
-
-	fmt.Printf("%b\n",g.DigitsPositions.Boxes[0])
-	
+	}	
 
 	g.Print()
 	fmt.Printf("Couldn't solve the grid any further with current settings\n")

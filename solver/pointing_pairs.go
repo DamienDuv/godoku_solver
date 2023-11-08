@@ -6,9 +6,9 @@ import (
 	"github.com/DamienDuv/godoku/models"
 )
 
-// Finds an alignment of the same candidate withing a box and clears the corresponding
+// pointingPairs finds an alignment of the same candidate withing a box and clears the corresponding
 // row or column of this candidate (outside of the box containing the alignment)
-func alignmentInBox(g *models.Grid) bool {
+func pointingPairs(g *models.Grid) bool {
 	performedAction := false
 
 	alignments := []uint16{
@@ -44,7 +44,7 @@ func alignmentInBox(g *models.Grid) bool {
 					}
 
 					if removed {
-						fmt.Printf("alignment of %d in box %d, row %d\n", val, i+1, row+1)
+						fmt.Printf("pointing pair of %d in box %d, row %d\n", val, i+1, row+1)
 						performedAction = true
 					}
 				} else { // is on a column alignment
@@ -58,7 +58,7 @@ func alignmentInBox(g *models.Grid) bool {
 					}
 
 					if removed {
-						fmt.Printf("alignment of %d in box %d, col %d\n", val, i+1, col+1)
+						fmt.Printf("pointing pair of %d in box %d, col %d\n", val, i+1, col+1)
 						performedAction = true
 					}
 

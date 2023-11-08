@@ -21,6 +21,7 @@ var h []string = []string{
 var ex []string = []string{
 	"......5...7.9....2.4.68.1......32.....6.9...45.3..4........1..67.......1..9....7.",
 	"76.1..5.85...74....3..........658..............3...2.4.7.2........5....6.....3.91",
+	".8.....9..1..863.2...31......4..............5...261..4...54...63.9...8..2........",
 }
 
 var nakedPairTest = []string{
@@ -37,7 +38,7 @@ var hiddenSetTest = []string{
 
 func main() {
 	
-	g, err := models.NewGrid(ex[0])
+	g, err := models.NewGrid(ex[2])
 
 	if err != nil {
 		fmt.Printf("%v\n",err)
