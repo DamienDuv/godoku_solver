@@ -3,7 +3,7 @@ package solver
 import (
 	"fmt"
 
-	"github.com/DamienDuv/godoku/models"
+	"github.com/DamienDuv/godoku_solver/models"
 )
 
 func nakedSubSet(g *models.Grid, subSetSize int) bool {

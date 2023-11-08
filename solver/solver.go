@@ -3,7 +3,7 @@ package solver
 import (
 	"fmt"
 
-	"github.com/DamienDuv/godoku/models"
+	"github.com/DamienDuv/godoku_solver/models"
 )
 
 const limit = 50
@@ -21,7 +21,6 @@ func Solve(g *models.Grid) {
 		performedAction = performedAction || hiddenSingle(g)
 
 		if g.IsFilled() && g.IsValid() {
-			g.Print()
 			fmt.Printf("Solved in %d iterations\n", i+1)
 			return
 		}
@@ -37,6 +36,5 @@ func Solve(g *models.Grid) {
 		i++
 	}	
 
-	g.Print()
 	fmt.Printf("Couldn't solve the grid any further with current settings\n")
 }

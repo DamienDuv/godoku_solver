@@ -3,7 +3,7 @@ package solver
 import (
 	"fmt"
 
-	"github.com/DamienDuv/godoku/models"
+	"github.com/DamienDuv/godoku_solver/models"
 )
 
 // pointingPairs finds an alignment of the same candidate withing a box and clears the corresponding

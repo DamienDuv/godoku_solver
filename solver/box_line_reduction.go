@@ -4,7 +4,7 @@ package solver
 import (
 	"fmt"
 
-	"github.com/DamienDuv/godoku/models"
+	"github.com/DamienDuv/godoku_solver/models"
 )
 
 // boxLineReduction finds a candidate within a row/col that is confined to a single box

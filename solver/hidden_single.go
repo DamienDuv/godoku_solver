@@ -3,7 +3,7 @@ package solver
 import (
 	"fmt"
 
-	"github.com/DamienDuv/godoku/models"
+	"github.com/DamienDuv/godoku_solver/models"
 )
 
 // Find Rows / Columns / Boxes where a candidate is present only once and fills it
